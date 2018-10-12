@@ -1,5 +1,7 @@
+import re
 
 board = []
+board_size = 3
 
 def create_board(board_size):
     t = 1
@@ -13,26 +15,46 @@ def create_board(board_size):
 
 def modify_board(number, player):
     player_str = str(player).upper()
+    number_str = str(number)
     for key_board, value_board in enumerate(board):
         for key_line, value_line in enumerate(value_board):
-            if value_line == number:
+            if value_line == number_str:
                 board[key_board][key_line] = player_str
 
-create_board(3)
+create_board(board_size)
 print(board)
+print("")
 
-modify_board("9","o")
+
 modify_board("1","x")
-modify_board("4","X")
-modify_board("7","X")
+modify_board("2","x")
+modify_board("3","x")
 
-#for key_board, value_board in enumerate(board):
-#   if value_board[0] == "X":
-#       print(value_board[0])
+#for p in range(board_size):
+#    for key_line, value_line in enumerate(board[p]):
+#        if board[p][key_line] == "X":
+#            print(key_line,p)
+#    
 
-[i for i, j in zip(a, b) if i == j]
+for n in range(board_size):
+    pass
+
+for x in range(board_size):
+    for y in range(board_size):
+        winner = True
+        
+        if board[y][x] != "X":
+            winner = False
+            continue
+        if board[y][x] != "X":
+            winner = False
+            continue
+        if board[x][x] != "X":
+            winner = False
+            continue
     
-print(board)
+    if winner == True:
+        print("We have a winner")
 
-
+print("")
 print(board)
