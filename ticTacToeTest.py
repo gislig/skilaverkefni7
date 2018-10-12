@@ -23,38 +23,50 @@ def modify_board(number, player):
 
 create_board(board_size)
 print(board)
-print("")
-
 
 modify_board("1","x")
-modify_board("2","x")
-modify_board("3","x")
+modify_board("5","x")
+modify_board("9","x")
 
-#for p in range(board_size):
-#    for key_line, value_line in enumerate(board[p]):
-#        if board[p][key_line] == "X":
-#            print(key_line,p)
-#    
+print(board)
+print("")
 
-for n in range(board_size):
-    pass
-
-for x in range(board_size):
-    for y in range(board_size):
+# Virkar fínt
+def check_row_winner(board, player):
+    for x in range(board_size):
         winner = True
-        
-        if board[y][x] != "X":
-            winner = False
-            continue
-        if board[y][x] != "X":
-            winner = False
-            continue
-        if board[x][x] != "X":
-            winner = False
-            continue
-    
-    if winner == True:
-        print("We have a winner")
+        for y in range(board_size):
+            if board[x][y] != player:                
+                winner = False
+                continue
+
+        if winner == True:
+            return winner
+    return winner
+
+def check_col_winner(board, player):
+    for x in range(board_size):
+        winner = True
+        for y in range(board_size):
+            if board[y][x] != player:                
+                winner = False
+                continue
+
+        if winner == True:
+            return winner
+    return winner
+
+def check_diag_winner(board, player):
+    for x in range(board_size):
+        winner = True
+        for y in range(board_size):
+            if board[x][x] != player:                
+                winner = False
+                continue
+        return winner
+
+print(check_col_winner(board,"X"))
+print(check_row_winner(board,"X"))
+print(check_diag_winner(board,"X"))
 
 print("")
-print(board)
