@@ -1,6 +1,7 @@
 board = []
-board_size = 4
+board_size = 3
 
+# Creates the board and the size of the board
 def create_board(board_size):
     t = 1
     for i in range(1,board_size+1):
@@ -10,28 +11,44 @@ def create_board(board_size):
             t += 1
         board.append(line)
 
+# Check if select number exists
+def check_if_number_exists(number):
+    number_exists = False
+    for key, value in enumerate(board):
+        if str(number) in value:
+            number_exists = True
+    return number_exists
 
+# Modify the board based on player selection
 def modify_board(number, player):
     player_str = str(player).upper()
     number_str = str(number)
-    for key_board, value_board in enumerate(board):
-        for key_line, value_line in enumerate(value_board):
-            if value_line == number_str:
-                board[key_board][key_line] = player_str
+    if check_if_number_exists(number) == True:
+        for key_board, value_board in enumerate(board):
+            for key_line, value_line in enumerate(value_board):
+                if value_line == number_str:
+                    board[key_board][key_line] = player_str
+    else:
+        print("Illegal move!")
 
 create_board(board_size)
 print(board)
 
 modify_board("1","x")
-modify_board("5","x")
-modify_board("9","x")
-modify_board("13","x")
+modify_board("2","x")
+modify_board("3","o")
+modify_board("4","o")
+modify_board("5","o")
+modify_board("6","x")
+modify_board("7","x")
+modify_board("8","x")
+modify_board("9","o")
 
 print(board)
 print("")
 
 # Check each row if there is a win
-def check_row_winner(board, player):
+def check_row_winner(player):
     winner = False
     for x in range(len(board)):
         counter_row = 0
@@ -44,7 +61,7 @@ def check_row_winner(board, player):
     return winner
 
 # Checks columns down if there is a win
-def check_col_winner(board, player):
+def check_col_winner(player):
     winner = False
     for x in range(len(board)):
         counter_col = 0
@@ -57,7 +74,7 @@ def check_col_winner(board, player):
     return winner
 
 # Checks diagonal rows from left to right
-def check_dia_winner_lr(board, player):
+def check_dia_winner_lr(player):
     winner = False
     counter_dia = 0
 
@@ -70,7 +87,7 @@ def check_dia_winner_lr(board, player):
     return winner
 
 # Checks diagonal rows from left to right
-def check_dia_winner_rl(board, player):
+def check_dia_winner_rl(player):
     winner = False
     counter_dia = 0
     reverse_count = 0
@@ -84,11 +101,31 @@ def check_dia_winner_rl(board, player):
             winner = True
     return winner
 
-# Evaluates the board and then figures out who is the winner
-def check_winner_board(board, player):
-    if check_row_winner(board,player) == True or check_col_winner(board,player) == True or check_dia_winner_lr(board,player) == True or check_dia_winner_rl(board,player) == True:
-        return True
-    else:
-        return False
+# Check if draw
+def check_draw():
+    number_exists = False
+    for key_board, value_board in enumerate(board):
+        for key_line, value_line in enumerate(value_board):
+            try:
+                if int(value_line):
+                    number_exists = True
+            except ValueError:
+                pass
+    return number_exists
 
-print(check_winner_board(board,"X"))
+# Evaluates the board and then figures out who is the winner
+# Returns two variables, eather if there is a draw or if there is a winner.
+def check_winner_board(player):
+    is_winner = False
+    is_draw = False
+    if check_row_winner(player) == True or check_col_winner(player) == True or check_dia_winner_lr(player) == True or check_dia_winner_rl(player) == True:
+        is_winner = True
+    else:
+        is_winner = False
+    if is_winner == False:
+        if check_draw() == False:
+            is_draw = True
+            print("Draw!")
+    return is_winner, is_draw
+
+print(check_winner_board("X"))
