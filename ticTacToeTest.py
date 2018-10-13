@@ -3,6 +3,7 @@ board = []
 # Creates the board and the size of the board
 def create_board(board_size):
     t = 1
+    if board_size < 3: board_size = 3
     for i in range(1,board_size+1):
         line = []
         for j in range(1,board_size+1):
@@ -131,8 +132,7 @@ def player_turn(player):
 
 # Main application
 def main():
-    #board_size = int(input("Input dimension of the board: "))
-    board_size = 3
+    board_size = int(input("Input dimension of the board: "))
     create_board(board_size)
     player = "X"
 
@@ -158,3 +158,8 @@ def main():
         player = player_turn(player)
 
 main()
+
+# Það sem vantar eru villuboð
+#   1. position is not a number
+#   2. position number is not consistent with the dimension of the game
+#   3. a position number already contains either X or O.
