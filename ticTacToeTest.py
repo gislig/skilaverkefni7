@@ -1,5 +1,4 @@
 board = []
-board_size = 3
 
 # Creates the board and the size of the board
 def create_board(board_size):
@@ -23,29 +22,10 @@ def check_if_number_exists(number):
 def modify_board(number, player):
     player_str = str(player).upper()
     number_str = str(number)
-    if check_if_number_exists(number) == True:
-        for key_board, value_board in enumerate(board):
-            for key_line, value_line in enumerate(value_board):
-                if value_line == number_str:
-                    board[key_board][key_line] = player_str
-    else:
-        print("Illegal move!")
-
-create_board(board_size)
-print(board)
-
-modify_board("1","x")
-modify_board("2","x")
-modify_board("3","o")
-modify_board("4","o")
-modify_board("5","o")
-modify_board("6","x")
-modify_board("7","x")
-modify_board("8","x")
-modify_board("9","o")
-
-print(board)
-print("")
+    for key_board, value_board in enumerate(board):
+        for key_line, value_line in enumerate(value_board):
+            if value_line == number_str:
+                board[key_board][key_line] = player_str
 
 # Check each row if there is a win
 def check_row_winner(player):
@@ -86,7 +66,7 @@ def check_dia_winner_lr(player):
             winner = True
     return winner
 
-# Checks diagonal rows from left to right
+# Checks diagonal rows from right to left
 def check_dia_winner_rl(player):
     winner = False
     counter_dia = 0
@@ -125,7 +105,45 @@ def check_winner_board(player):
     if is_winner == False:
         if check_draw() == False:
             is_draw = True
-            print("Draw!")
     return is_winner, is_draw
 
-print(check_winner_board("X"))
+# Prints out the board
+def print_out_board():
+    for line in range(len(board)):
+        lines = "{:>5}"*len(board)
+        print(lines.format(*board[line]))
+
+# Allows the player to turn
+def player_turn(player):
+    while True:
+        number = input("{} postition : ".format(player))
+        if check_if_number_exists(number) == True:
+            modify_board(number,player)
+            if player == "X":
+                player = "O"
+            else:
+                player = "X"
+            break
+        else:
+            print("Illegal move!")
+    
+    return player
+
+# Main application
+def main():
+    #board_size = int(input("Input dimension of the board: "))
+    board_size = 3
+    create_board(board_size)
+    player = "X"
+
+    while True:
+        winner, draw = check_winner_board(player)
+        if winner == True:
+            print("Winner is: {}".format(player))
+            break
+        if draw == True:
+            print("Draw!")
+            break
+        print_out_board()
+        player = player_turn(player)
+main()
