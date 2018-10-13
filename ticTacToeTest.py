@@ -116,7 +116,7 @@ def print_out_board():
 # Allows the player to turn
 def player_turn(player):
     while True:
-        number = input("{} postition : ".format(player))
+        number = input("{} position: ".format(player))
         if check_if_number_exists(number) == True:
             modify_board(number,player)
             if player == "X":
@@ -137,13 +137,24 @@ def main():
     player = "X"
 
     while True:
-        winner, draw = check_winner_board(player)
-        if winner == True:
-            print("Winner is: {}".format(player))
+        
+        x_won, draw = check_winner_board("X")
+        o_won, draw = check_winner_board("O")
+        
+        if x_won == True:
+            print_out_board()
+            print("Winner is: X")
+            break
+        if o_won == True:
+            print_out_board()
+            print("Winner is: O")
             break
         if draw == True:
+            print_out_board()
             print("Draw!")
             break
+
         print_out_board()
         player = player_turn(player)
+
 main()
