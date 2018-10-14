@@ -131,6 +131,7 @@ def player_turn(player):
     return player
 
 # Main application
+
 def main():
     board_size = int(input("Input dimension of the board: "))
     create_board(board_size)
